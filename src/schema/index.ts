@@ -7,7 +7,15 @@ export const schema = gql`
     }
 
     type Mutation {
-        createUser(user: User!) User!
+        createUser(
+            user_id: String!
+            user_fullname: String!
+            user_email: String!
+            user_password: String!
+            user_avatar: String
+            user_address: String
+            user_confirm_email: Boolean
+        ): User!
     }
 
     type User {
@@ -15,9 +23,9 @@ export const schema = gql`
         user_fullname: String!
         user_email: String!
         user_password: String!
-        user_avatar?: String!
-        user_address?: String!
-        user_confirm_email?: Boolean!
+        user_avatar: String
+        user_address: String
+        user_confirm_email: Boolean
     }
 
 `
