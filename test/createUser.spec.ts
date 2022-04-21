@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createUser } from "../src/resolvers/createUserResolver";
+import { resolvers } from "../src/resolvers";
 
 describe('createUser', () => {
     it('should create a user in database', async () => {
@@ -14,7 +14,7 @@ describe('createUser', () => {
                 user_confirm_email: false,
             }
         }
-        const result:any = await createUser(expextedResult.user);
+        const result:any = await resolvers.Mutation.createUser(expextedResult.user);
         expect(result).to.eql(expextedResult);
     })
 })
