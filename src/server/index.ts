@@ -1,23 +1,28 @@
-import express, { Application } from "express";
 import cors from "cors";
-import { resolvers } from '../resolvers/index';
-import { schema } from "../schema";
+import express, { Application } from "express";
 import { 
     ApolloServer, 
     ExpressContext 
 } from "apollo-server-express";
-import * as models from "../models/index";
+import { resolvers } from '../resolvers/index';
+import { schema } from "../schema";
+import { 
+    connectDb 
+} from "../models/index";
+import { context } from '../context/index';
+import 'dotenv/config';
+
 class Server {
     private app : Application;
     private apolloServer : ApolloServer<ExpressContext>;
+    private port : string | number = process.env.PORT || 4000;
+    private environment : string | undefined = process.env.NODE_ENV;
     constructor() {
         this.app = express();
         this.apolloServer = new ApolloServer(
             {
                 typeDefs: schema, 
-                context: {
-                    models
-                },
+                context,
                 resolvers
             }
         );
@@ -30,10 +35,11 @@ class Server {
         this.apolloServer.applyMiddleware({app: this.app, path: "/apollo-server"});
     }
 
-    listen() {
-        this.app.listen({port: 4000}, ()=>{
-            console.log('listening on port 4000');
-        })
+    async listen() {
+        await connectDb();
+        this.app.listen({port: this.port}, ()=>{
+            console.log(`listening on port ${this.port}`);
+        });
     }
 }
 

@@ -1,0 +1,9 @@
+schema: ./src/schema/index.ts
+generates:
+  ./src/interfaces/resolvers-types.ts:
+    config:
+      useIndexSignature: true
+      contextType: ./#Context
+    plugins:
+      - typescript
+      - typescript-resolvers
