@@ -1,10 +1,12 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { 
     UserInterface, 
     Context,
     GraphqlResolversTypes
 } from "../../interfaces";
 import { patterns } from '../../const';
+import 'dotenv/config';
 
 const validate = (email: string, password: string) => {
 	const emailValidator = new RegExp(patterns.emailPattern);
@@ -12,9 +14,17 @@ const validate = (email: string, password: string) => {
 	return emailValidator.test(email) && passwordValidator.test(password);
 }
 
+const createToken = (user_email: string, user_id: string, secret: string, expiresIn: string) => {
+	const token = jwt.sign({ user_email, user_id }, secret, { expiresIn });
+	return token;
+}
+
 export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSignUpArgs, context: Context) => {
     try {
-       const { models } = context;
+       const { 
+		   models, 
+		   secret 
+		} = context;
        const {
             user_email,
             user_password,
@@ -25,7 +35,7 @@ export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSi
        const isValid = validate(user_email, user_password);
        console.log(isValid)
        if (!isValid) {
-           return { error: true };
+		throw new Error("The credentials are invalid");
        }
 	   
 	   console.log(models)
@@ -33,7 +43,7 @@ export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSi
        let user = await models.User.findOne({user_email: user_email});
        console.log(user)
         if (user) {
-            return {error: true};
+            throw new Error("There is a user with this email already");
         }
         const hashPassword = await bcrypt.hash(user_password, 8);
 	   console.log(hashPassword)
@@ -41,21 +51,24 @@ export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSi
 		await user.save();
 		const signedUser = await models.User.findOne({user_email});
 		if (!signedUser) {
-            return {error: true};
+            throw new Error("Something went wrong");
         }
 		const { 
 			user_password : hashedPassword, 
 			...restsigned
 		} = signedUser.toObject();
 		console.log(restsigned)
+
+		const token = createToken(restsigned.user_email, restsigned.user_id, secret, "30m")
+
 		return { 
             user: {
                 ...restsigned
             },
-            token: "",
+            token,
         };
-    } catch (error) {
-        return {error: true};
+    } catch (error:any) {
+        throw new Error(error.message);
     }
 }
 
