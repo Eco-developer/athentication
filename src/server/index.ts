@@ -16,7 +16,6 @@ class Server {
     private app : Application;
     private apolloServer : ApolloServer<ExpressContext>;
     private port : string | number = process.env.PORT || 4000;
-    private environment : string | undefined = process.env.NODE_ENV;
     constructor() {
         this.app = express();
         this.apolloServer = new ApolloServer(

@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { Context } from './';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
 };
 
 export type Mutation = {
@@ -52,10 +53,16 @@ export type QueryUserArgs = {
   user_id: Scalars['String'];
 };
 
+export type SignedUser = {
+  __typename?: 'SignedUser';
+  token: Scalars['String'];
+  user: User;
+};
+
 export type User = {
   __typename?: 'User';
-  created_at?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
   use_country?: Maybe<Scalars['String']>;
   user_address?: Maybe<Scalars['String']>;
   user_avatar?: Maybe<Scalars['String']>;
@@ -65,7 +72,6 @@ export type User = {
   user_email: Scalars['String'];
   user_fullname: Scalars['String'];
   user_id: Scalars['String'];
-  user_password: Scalars['String'];
   user_payment_account_no?: Maybe<Scalars['String']>;
   user_payment_expire?: Maybe<Scalars['String']>;
   user_payment_method?: Maybe<Scalars['String']>;
@@ -73,12 +79,6 @@ export type User = {
   user_phone?: Maybe<Scalars['String']>;
   user_postal_code?: Maybe<Scalars['String']>;
   user_roles: Array<Maybe<Scalars['String']>>;
-};
-
-export type SignedUser = {
-  __typename?: 'signedUser';
-  token: Scalars['String'];
-  user: User;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -152,25 +152,31 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  SignedUser: ResolverTypeWrapper<SignedUser>;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
-  signedUser: ResolverTypeWrapper<SignedUser>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
+  Date: Scalars['Date'];
   Mutation: {};
   Query: {};
+  SignedUser: SignedUser;
   String: Scalars['String'];
   User: User;
-  signedUser: SignedUser;
 }>;
 
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  signUp?: Resolver<Maybe<ResolversTypes['signedUser']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'user_confirm_email' | 'user_email' | 'user_fullname' | 'user_id' | 'user_password' | 'user_roles'>>;
+  signUp?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'user_confirm_email' | 'user_email' | 'user_fullname' | 'user_id' | 'user_password' | 'user_roles'>>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
@@ -178,9 +184,15 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
 }>;
 
+export type SignedUserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SignedUser'] = ResolversParentTypes['SignedUser']> = ResolversObject<{
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
-  created_at?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  updated_at?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   use_country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -190,7 +202,6 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   user_email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user_fullname?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  user_password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user_payment_account_no?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_payment_expire?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_payment_method?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -201,16 +212,11 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type SignedUserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['signedUser'] = ResolversParentTypes['signedUser']> = ResolversObject<{
-  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type Resolvers<ContextType = Context> = ResolversObject<{
+  Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  SignedUser?: SignedUserResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
-  signedUser?: SignedUserResolvers<ContextType>;
 }>;
 

@@ -25,9 +25,7 @@ export const schema = gql`
             user_basquet: [String]
             user_payment_expire: String
             user_confirm_email: Boolean!
-        ): SignedUser
-            
-        
+        ): SignedUser   
     }
 
     type User {
@@ -35,7 +33,6 @@ export const schema = gql`
         user_roles: [String]!
         user_fullname: String!
         user_email: String!
-        user_password: String!
         user_avatar: String
         user_phone: String
         user_address: String
@@ -48,13 +45,15 @@ export const schema = gql`
         user_payment_expire: String
         user_confirm_email: Boolean!
         user_basquet: [String]
-        created_at: String
-        updated_at: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     type SignedUser {
         user: User!
         token: String!
     }
+
+    scalar Date
 
 `

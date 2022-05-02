@@ -2,11 +2,11 @@ import bcrypt from 'bcrypt';
 import { 
 	createToken,
 	validate,
-} from '../../services/index';
+} from '../services/index';
 import { 
     Context,
     GraphqlResolversTypes
-} from "../../interfaces";
+} from "../interfaces";
 import 'dotenv/config';
 
 export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSignUpArgs, context: Context) => {

@@ -16,6 +16,6 @@ export interface UserInterface {
     user_payment_expire?: string;
     user_confirm_email: boolean;
     user_basquet?: string[];
-    created_at?: Date;
-    updated_at?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
