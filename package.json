@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test-e2e": "mocha ./dist/test/**/*.spec.js",
+    "test-e2e": "mocha ./dist/test/**/*.spec.js --timeout 200000",
     "test-unit": "mocha ./dist/src/**/**/*.spec.js",
     "start": "set NODE_ENV=production && node dist/src/index.js",
     "dev": "set NODE_ENV=development && concurrently \"tsc -w\" \"nodemon ./dist/src/index.js\"",
     "test-server": "set NODE_ENV=test && node dist/src/index.js",
-    "test": "yarn test-unit && yarn run test-e2e",
+    "test": "yarn test-unit && yarn test-e2e",
     "watch": "tsc -w",
     "generate": "graphql-codegen"
   },
