@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test-e2e": "mocha ./dist/test/**/*.spec.js --timeout 200000",
+    "test-e2e": "set NODE_ENV=test && mocha ./dist/test/**/*.spec.js --timeout 100000",
     "test-unit": "mocha ./dist/src/**/**/*.spec.js",
     "start": "set NODE_ENV=production && node dist/src/index.js",
     "dev": "set NODE_ENV=development && concurrently \"tsc -w\" \"nodemon ./dist/src/index.js\"",
