@@ -40,11 +40,11 @@ export const signUp = async (variables: any) => {
     )
 }
 
-export const queryUser = async (variables: any) => {
+export const queryUser = async (variables: any, token: string = "") => {
   return await axios.post(
       api,
       {
-         query: `
+        query: `
           query User($userId: String!) {
             user(user_id: $userId) {
               user_id
@@ -67,8 +67,9 @@ export const queryUser = async (variables: any) => {
               updatedAt
             }
           }
-          `,
-          variables 
-      } 
+        `,
+        variables
+      },
+      { headers: { "x-data-token": token } }
   )
 }

@@ -41,7 +41,7 @@ export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSi
 			...restsigned
 		} = signedUser.toObject();
 
-		const token = createToken(restsigned.user_email, restsigned.user_id, secret, "30m")
+		const token = createToken(restsigned.user_email, restsigned.user_id, secret, "30m");
 
 		return { 
             user: {
