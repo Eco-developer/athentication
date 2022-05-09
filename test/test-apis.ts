@@ -38,3 +38,37 @@ export const signUp = async (variables: any) => {
         } 
     )
 }
+
+export const queryUser = async (variables: any, token: string = "") => {
+  return await axios.post(
+      api,
+      {
+        query: `
+          query User($userId: String!) {
+            user(user_id: $userId) {
+              user_id
+              user_roles
+              user_fullname
+              user_email
+              user_avatar
+              user_phone
+              user_address
+              user_city
+              user_postal_code
+              use_country
+              user_payment_method
+              user_payment_provider
+              user_payment_account_no
+              user_payment_expire
+              user_confirm_email
+              user_basquet
+              createdAt
+              updatedAt
+            }
+          }
+        `,
+        variables
+      },
+      { headers: { "x-data-token": token } }
+  )
+}
