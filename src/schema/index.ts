@@ -18,7 +18,7 @@ export const schema = gql`
             user_address: String
             user_city: String
             user_postal_code: String
-            use_country: String
+            user_country: String
             user_payment_method: String
             user_payment_provider: String
             user_payment_account_no: String
@@ -26,6 +26,11 @@ export const schema = gql`
             user_payment_expire: String
             user_confirm_email: Boolean!
         ): SignedUser   
+        
+        login (
+            user_email: String!
+            user_password: String!
+        ): SignedUser 
     }
 
     type User {
@@ -38,7 +43,7 @@ export const schema = gql`
         user_address: String
         user_city: String
         user_postal_code: String
-        use_country: String
+        user_country: String
         user_payment_method: String
         user_payment_provider: String
         user_payment_account_no: String

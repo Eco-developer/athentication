@@ -5,6 +5,7 @@ import 'dotenv/config';
 const api = `${process.env.TEST_API}`;
 
 export const signUp = async (variables: any) => {
+  console.log(api)
     return await axios.post(
         api,
         {
@@ -21,15 +22,13 @@ export const signUp = async (variables: any) => {
                 user_address
                 user_postal_code
                 user_city
-                use_country
+                user_country
                 user_payment_method
                 user_payment_provider
                 user_payment_account_no
                 user_payment_expire
                 user_confirm_email
                 user_basquet
-                updated_at
-                created_at
               }
               token
             }

@@ -18,17 +18,24 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  login?: Maybe<SignedUser>;
   signUp?: Maybe<SignedUser>;
 };
 
 
+export type MutationLoginArgs = {
+  user_email: Scalars['String'];
+  user_password: Scalars['String'];
+};
+
+
 export type MutationSignUpArgs = {
-  use_country?: InputMaybe<Scalars['String']>;
   user_address?: InputMaybe<Scalars['String']>;
   user_avatar?: InputMaybe<Scalars['String']>;
   user_basquet?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   user_city?: InputMaybe<Scalars['String']>;
   user_confirm_email: Scalars['Boolean'];
+  user_country?: InputMaybe<Scalars['String']>;
   user_email: Scalars['String'];
   user_fullname: Scalars['String'];
   user_id: Scalars['String'];
@@ -63,12 +70,12 @@ export type User = {
   __typename?: 'User';
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
-  use_country?: Maybe<Scalars['String']>;
   user_address?: Maybe<Scalars['String']>;
   user_avatar?: Maybe<Scalars['String']>;
   user_basquet?: Maybe<Array<Maybe<Scalars['String']>>>;
   user_city?: Maybe<Scalars['String']>;
   user_confirm_email: Scalars['Boolean'];
+  user_country?: Maybe<Scalars['String']>;
   user_email: Scalars['String'];
   user_fullname: Scalars['String'];
   user_id: Scalars['String'];
@@ -176,6 +183,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  login?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'user_email' | 'user_password'>>;
   signUp?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'user_confirm_email' | 'user_email' | 'user_fullname' | 'user_id' | 'user_password' | 'user_roles'>>;
 }>;
 
@@ -193,12 +201,12 @@ export type SignedUserResolvers<ContextType = Context, ParentType extends Resolv
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  use_country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_basquet?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   user_city?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_confirm_email?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  user_country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user_fullname?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

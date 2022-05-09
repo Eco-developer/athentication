@@ -57,7 +57,7 @@ const schema = new Schema<UserInterface>({
         trim: true,
         default: '',
     },
-    use_country: {
+    user_country: {
         type: String,
         trim: true,
         default: '',

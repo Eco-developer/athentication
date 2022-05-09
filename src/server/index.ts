@@ -1,5 +1,6 @@
 import cors from "cors";
 import express, { Application } from "express";
+import expressPlayground  from 'graphql-playground-middleware-express';
 import { 
     ApolloServer, 
     ExpressContext 
@@ -10,6 +11,7 @@ import {
     connectDb 
 } from "../models/index";
 import { context } from '../context/index';
+
 import 'dotenv/config';
 
 class Server {
@@ -22,7 +24,7 @@ class Server {
             {
                 typeDefs: schema, 
                 context,
-                resolvers
+                resolvers,
             }
         );
         this.middlewares();
@@ -32,6 +34,7 @@ class Server {
         this.app.use(cors());
         await this.apolloServer.start();
         this.apolloServer.applyMiddleware({app: this.app, path: "/apollo-server"});
+        this.app.use('/playground', expressPlayground({ endpoint: '/apollo-server' }))
     }
 
     async listen() {

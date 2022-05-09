@@ -9,7 +9,7 @@ export interface UserInterface {
     user_address?: string;
     user_city?: string;
     user_postal_code?: string;
-    use_country?: string;
+    user_country?: string;
     user_payment_method?: string;
     user_payment_provider?: string;
     user_payment_account_no?: string;

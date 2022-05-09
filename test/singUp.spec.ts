@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import { v4 as uuid } from 'uuid';
 import { signUp } from "./test-apis";
-import { models } from "../src/models";
 
 describe("end to end singUp test", () => {
     
@@ -20,7 +19,8 @@ describe("end to end singUp test", () => {
         expect(result.data.data.signUp.user).to.have.property("user_email");
         expect(result.data.data.signUp.user).to.have.property("user_fullname");
         expect(result.data.data.signUp.user).to.have.property("user_id");
-        expect(result.data.data.signUp.user).to.have.property("user_confirm_email");       
+        expect(result.data.data.signUp.user).to.have.property("user_confirm_email");    
+           
     }).timeout(20000)
 
     it("should return an error because the credentials do not pass the email or password validation", async () => {
