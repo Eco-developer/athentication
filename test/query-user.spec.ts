@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { expect } from "chai";
 import { queryUser } from "./test-apis";
 import { createToken } from "../src/services";
@@ -6,18 +7,20 @@ import {
     models 
 } from "../src/models";
 import { UserInterface } from "../src/interfaces";
+import { roles } from  '../src/const/index';
 import 'dotenv/config';
 
 describe("end to end query user by user_id", () => {
     before(async () => {
         await connectDb();
         await models.User.deleteMany({});
+        const hashPassword = await bcrypt.hash(`123456Jm.`, 8);
         const userData: UserInterface = {
             user_id: "test-user_id",
-            user_roles: ["user"],  
+            user_roles: [roles.USER],  
             user_fullname: "jose",
             user_email: `user@test.com`, 
-            user_password: `123456Jm.`,
+            user_password: hashPassword,
             user_confirm_email: false,
         }
         const userTest = new models.User(userData);
@@ -34,6 +37,13 @@ describe("end to end query user by user_id", () => {
         const result = await queryUser({userId : "test-user_id_incorrect"}, token);
         expect(result.data).to.have.property("errors");
         expect(result.data.errors[0].message).to.be.equal("There is not a user with this user_id in the database"); 
+    })
+
+    it("should return an error if user-token is not valid", async () => {
+        const token = "faketokentest"
+        const result = await queryUser({userId : "test-user_id"}, token);
+        expect(result.data).to.have.property("errors");
+        expect(result.data.errors[0].message).to.be.equal("Your session expired, sign in again."); 
     })
 
     it("should return a forbidden error as not authenticated", async () => {

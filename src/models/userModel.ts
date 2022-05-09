@@ -3,7 +3,8 @@ import {
     model 
 } from 'mongoose';
 import { UserInterface } from "../interfaces";
-
+import { roles } from  '../const/index';
+ 
 const schema = new Schema<UserInterface>({
     user_id: {
         type: String,
@@ -14,7 +15,7 @@ const schema = new Schema<UserInterface>({
     user_roles: {
         type: [String],
         required: true,
-        default: ["user"],
+        default: [roles.USER],
     },
     user_fullname: {
         type: String,

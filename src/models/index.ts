@@ -25,15 +25,6 @@ const mongo_uri : string | undefined =  getUri(process.env.NODE_ENV);
 
 export const connectDb = async () => {
 	await mongoose.connect(`${mongo_uri}`, mongooseHeader);
-	if (`${mongo_uri}`.includes("test")) {
-		await User.create({userId: uuid(),
-			user_id: uuid(),
-            user_roles: ["user"],  
-            user_fullname: "jose",
-            user_email: `user@example.com`, 
-            user_password: `123456Jm.`,
-            user_confirm_email: false,})
-	}
     console.log(`${mongo_uri}`)
 };
 

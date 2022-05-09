@@ -16,10 +16,21 @@ export type Scalars = {
   Date: any;
 };
 
+export type ConfirmDelection = {
+  __typename?: 'ConfirmDelection';
+  deleted: Scalars['Boolean'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  deleteUser: ConfirmDelection;
   login?: Maybe<SignedUser>;
   signUp?: Maybe<SignedUser>;
+};
+
+
+export type MutationDeleteUserArgs = {
+  user_id: Scalars['String'];
 };
 
 
@@ -49,15 +60,28 @@ export type MutationSignUpArgs = {
   user_roles: Array<InputMaybe<Scalars['String']>>;
 };
 
+export type PagintedUsers = {
+  __typename?: 'PagintedUsers';
+  maxlentgh: Scalars['Int'];
+  users: Array<Maybe<User>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   user?: Maybe<User>;
-  users?: Maybe<Array<User>>;
+  users: PagintedUsers;
 };
 
 
 export type QueryUserArgs = {
   user_id: Scalars['String'];
+};
+
+
+export type QueryUsersArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  user_roles: Array<InputMaybe<Scalars['String']>>;
 };
 
 export type SignedUser = {
@@ -159,8 +183,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  ConfirmDelection: ResolverTypeWrapper<ConfirmDelection>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
+  PagintedUsers: ResolverTypeWrapper<PagintedUsers>;
   Query: ResolverTypeWrapper<{}>;
   SignedUser: ResolverTypeWrapper<SignedUser>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -170,12 +197,20 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
+  ConfirmDelection: ConfirmDelection;
   Date: Scalars['Date'];
+  Int: Scalars['Int'];
   Mutation: {};
+  PagintedUsers: PagintedUsers;
   Query: {};
   SignedUser: SignedUser;
   String: Scalars['String'];
   User: User;
+}>;
+
+export type ConfirmDelectionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ConfirmDelection'] = ResolversParentTypes['ConfirmDelection']> = ResolversObject<{
+  deleted?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -183,13 +218,20 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  deleteUser?: Resolver<ResolversTypes['ConfirmDelection'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'user_id'>>;
   login?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'user_email' | 'user_password'>>;
   signUp?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'user_confirm_email' | 'user_email' | 'user_fullname' | 'user_id' | 'user_password' | 'user_roles'>>;
 }>;
 
+export type PagintedUsersResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PagintedUsers'] = ResolversParentTypes['PagintedUsers']> = ResolversObject<{
+  maxlentgh?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  users?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'user_id'>>;
-  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
+  users?: Resolver<ResolversTypes['PagintedUsers'], ParentType, ContextType, RequireFields<QueryUsersArgs, 'user_roles'>>;
 }>;
 
 export type SignedUserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SignedUser'] = ResolversParentTypes['SignedUser']> = ResolversObject<{
@@ -221,8 +263,10 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
+  ConfirmDelection?: ConfirmDelectionResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
+  PagintedUsers?: PagintedUsersResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   SignedUser?: SignedUserResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

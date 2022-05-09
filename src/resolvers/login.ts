@@ -22,7 +22,7 @@ export const login = async (parent: any, args: GraphqlResolversTypes.MutationLog
 
 		const signedUser = await models.User.findOne({user_email});
 		if (!signedUser) {
-            throw new AuthenticationError("Invalid Email");
+            throw new AuthenticationError("The email is invalid.");
         }
 
 		const {
@@ -31,12 +31,12 @@ export const login = async (parent: any, args: GraphqlResolversTypes.MutationLog
 		} = signedUser.toObject();
 
         const isValid = await bcrypt.compare(
-            hashedPassword,
-            user_password
+            user_password,
+            hashedPassword
         );
 
         if (!isValid) {
-            throw new AuthenticationError("Invalid password");
+            throw new AuthenticationError("The password is invalid.");
         }
 		const token = createToken(restsigned.user_email, restsigned.user_id, secret, "30m")
 

@@ -2,7 +2,8 @@ import { gql } from "apollo-server-express";
 
 export const schema = gql`
     type Query {
-        users: [User!]
+        users(user_roles: [String]!, limit: Int, page: Int): PagintedUsers!
+        
         user(user_id: String!): User
     }
 
@@ -31,6 +32,10 @@ export const schema = gql`
             user_email: String!
             user_password: String!
         ): SignedUser 
+
+        deleteUser (
+            user_id: String!
+        ): ConfirmDelection!
     }
 
     type User {
@@ -57,6 +62,15 @@ export const schema = gql`
     type SignedUser {
         user: User!
         token: String!
+    }
+
+    type PagintedUsers {
+        users: [User]!
+        maxlentgh: Int!
+    }
+
+    type ConfirmDelection {
+        deleted: Boolean!
     }
 
     scalar Date

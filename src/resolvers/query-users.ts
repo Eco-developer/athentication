@@ -1,8 +1,9 @@
 import { 
-    Context,
+    Context, 
+    GraphqlResolversTypes,
 } from "../interfaces";
 
-export const users = async (parent: any, args: null, context: Context) => {
+export const users = async (parent: any, args:  GraphqlResolversTypes.QueryUsersArgs, context: Context) => {
     try {
         const {
             models : {
@@ -10,9 +11,20 @@ export const users = async (parent: any, args: null, context: Context) => {
             }
         } = context;
 
-        const usersIndDb = await User.find();
-       
-        return usersIndDb;
+        const {
+            limit,
+            page
+        } = args;
+        const currentPage = page ? page - 1 : 0;
+        const currentLimit = limit || 10;
+        const usersIndDb = await User.find().skip(currentLimit * currentPage).limit(currentLimit);
+        const maxlentgh: number = await User.count();
+
+        return { 
+            users : [...usersIndDb],
+            maxlentgh,
+            
+        };
     } catch (error:any) {
         throw new Error(error.message);
     }
