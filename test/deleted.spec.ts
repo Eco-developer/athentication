@@ -33,7 +33,7 @@ describe("end to end delete user by user_id test", () => {
             `${process.env.JWT_SECRET}`, 
             "30m"
         );
-        const result = await deleteUser({$userId : "test-delete-wrong-user_id"}, token);
+        const result = await deleteUser({userId : "test-delete-wrong-user_id"}, token);
         expect(result.data).to.have.property("errors");
         expect(result.data.errors[0].message).to.equal("there is not a user with that user_id.");
   
@@ -41,7 +41,7 @@ describe("end to end delete user by user_id test", () => {
 
     it("should return an error if user-token is not valid", async () => {
         const token = "faketokentest"
-        const result = await deleteUser({$userId : "test-delete-user_id"}, token);
+        const result = await deleteUser({userId : "test-delete-user_id"}, token);
         expect(result.data).to.have.property("errors");
         expect(result.data.errors[0].message).to.equal("Your session expired, sign in again.");
   
@@ -61,9 +61,10 @@ describe("end to end delete user by user_id test", () => {
             `${process.env.JWT_SECRET}`, 
             "30m"
         );
-        const result = await deleteUser({$userId : "test-delete-user_id"}, token);
-        expect(result.data.data).to.have.property("deleted");
-        expect(result.data.data.deleted).to.be.true;
+        const result = await deleteUser({userId : "test-delete-user_id"}, token);
+        expect(result.data.data).to.have.property("deleteUser");
+        expect(result.data.data.deleteUser).to.have.property("deleted");
+        expect(result.data.data.deleteUser.deleted).to.be.true;
 
            
     })

@@ -90,7 +90,11 @@ const schema = new Schema<UserInterface>({
     user_basquet: {
         type: [String],
         default: [],
-    }    
+    },   
+    user_orders: {
+        type: [String],
+        default: [],
+    },
 }, { timestamps: true });
 
 export const User = model<UserInterface>('User', schema);

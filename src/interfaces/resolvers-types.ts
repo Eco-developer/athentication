@@ -21,10 +21,16 @@ export type ConfirmDelection = {
   deleted: Scalars['Boolean'];
 };
 
+export type EditedPropeties = {
+  __typename?: 'EditedPropeties';
+  edited: Array<Maybe<UserEditableProperties>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   deleteUser: ConfirmDelection;
   login?: Maybe<SignedUser>;
+  modifyUser?: Maybe<EditedPropeties>;
   signUp?: Maybe<SignedUser>;
 };
 
@@ -40,10 +46,30 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationSignUpArgs = {
+export type MutationModifyUserArgs = {
+  type: Scalars['String'];
   user_address?: InputMaybe<Scalars['String']>;
   user_avatar?: InputMaybe<Scalars['String']>;
   user_basquet?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  user_city?: InputMaybe<Scalars['String']>;
+  user_confirm_email?: InputMaybe<Scalars['Boolean']>;
+  user_country?: InputMaybe<Scalars['String']>;
+  user_email?: InputMaybe<Scalars['String']>;
+  user_fullname?: InputMaybe<Scalars['String']>;
+  user_id: Scalars['String'];
+  user_orders?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  user_payment_account_no?: InputMaybe<Scalars['String']>;
+  user_payment_expire?: InputMaybe<Scalars['String']>;
+  user_payment_method?: InputMaybe<Scalars['String']>;
+  user_payment_provider?: InputMaybe<Scalars['String']>;
+  user_phone?: InputMaybe<Scalars['String']>;
+  user_postal_code?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationSignUpArgs = {
+  user_address?: InputMaybe<Scalars['String']>;
+  user_avatar?: InputMaybe<Scalars['String']>;
   user_city?: InputMaybe<Scalars['String']>;
   user_confirm_email: Scalars['Boolean'];
   user_country?: InputMaybe<Scalars['String']>;
@@ -103,6 +129,7 @@ export type User = {
   user_email: Scalars['String'];
   user_fullname: Scalars['String'];
   user_id: Scalars['String'];
+  user_orders?: Maybe<Array<Maybe<Scalars['String']>>>;
   user_payment_account_no?: Maybe<Scalars['String']>;
   user_payment_expire?: Maybe<Scalars['String']>;
   user_payment_method?: Maybe<Scalars['String']>;
@@ -110,6 +137,25 @@ export type User = {
   user_phone?: Maybe<Scalars['String']>;
   user_postal_code?: Maybe<Scalars['String']>;
   user_roles: Array<Maybe<Scalars['String']>>;
+};
+
+export type UserEditableProperties = {
+  __typename?: 'UserEditableProperties';
+  user_address?: Maybe<Scalars['String']>;
+  user_avatar?: Maybe<Scalars['String']>;
+  user_basquet?: Maybe<Array<Maybe<Scalars['String']>>>;
+  user_city?: Maybe<Scalars['String']>;
+  user_confirm_email?: Maybe<Scalars['Boolean']>;
+  user_country?: Maybe<Scalars['String']>;
+  user_email?: Maybe<Scalars['String']>;
+  user_fullname?: Maybe<Scalars['String']>;
+  user_orders?: Maybe<Array<Maybe<Scalars['String']>>>;
+  user_payment_account_no?: Maybe<Scalars['String']>;
+  user_payment_expire?: Maybe<Scalars['String']>;
+  user_payment_method?: Maybe<Scalars['String']>;
+  user_payment_provider?: Maybe<Scalars['String']>;
+  user_phone?: Maybe<Scalars['String']>;
+  user_postal_code?: Maybe<Scalars['String']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -185,6 +231,7 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   ConfirmDelection: ResolverTypeWrapper<ConfirmDelection>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  EditedPropeties: ResolverTypeWrapper<EditedPropeties>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   PagintedUsers: ResolverTypeWrapper<PagintedUsers>;
@@ -192,6 +239,7 @@ export type ResolversTypes = ResolversObject<{
   SignedUser: ResolverTypeWrapper<SignedUser>;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
+  UserEditableProperties: ResolverTypeWrapper<UserEditableProperties>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -199,6 +247,7 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   ConfirmDelection: ConfirmDelection;
   Date: Scalars['Date'];
+  EditedPropeties: EditedPropeties;
   Int: Scalars['Int'];
   Mutation: {};
   PagintedUsers: PagintedUsers;
@@ -206,6 +255,7 @@ export type ResolversParentTypes = ResolversObject<{
   SignedUser: SignedUser;
   String: Scalars['String'];
   User: User;
+  UserEditableProperties: UserEditableProperties;
 }>;
 
 export type ConfirmDelectionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ConfirmDelection'] = ResolversParentTypes['ConfirmDelection']> = ResolversObject<{
@@ -217,9 +267,15 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
+export type EditedPropetiesResolvers<ContextType = Context, ParentType extends ResolversParentTypes['EditedPropeties'] = ResolversParentTypes['EditedPropeties']> = ResolversObject<{
+  edited?: Resolver<Array<Maybe<ResolversTypes['UserEditableProperties']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   deleteUser?: Resolver<ResolversTypes['ConfirmDelection'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'user_id'>>;
   login?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'user_email' | 'user_password'>>;
+  modifyUser?: Resolver<Maybe<ResolversTypes['EditedPropeties']>, ParentType, ContextType, RequireFields<MutationModifyUserArgs, 'type' | 'user_id'>>;
   signUp?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'user_confirm_email' | 'user_email' | 'user_fullname' | 'user_id' | 'user_password' | 'user_roles'>>;
 }>;
 
@@ -252,6 +308,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   user_email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user_fullname?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user_orders?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   user_payment_account_no?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_payment_expire?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user_payment_method?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -262,13 +319,34 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UserEditablePropertiesResolvers<ContextType = Context, ParentType extends ResolversParentTypes['UserEditableProperties'] = ResolversParentTypes['UserEditableProperties']> = ResolversObject<{
+  user_address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_basquet?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  user_city?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_confirm_email?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  user_country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_fullname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_orders?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  user_payment_account_no?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_payment_expire?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_payment_method?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_payment_provider?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_postal_code?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = Context> = ResolversObject<{
   ConfirmDelection?: ConfirmDelectionResolvers<ContextType>;
   Date?: GraphQLScalarType;
+  EditedPropeties?: EditedPropetiesResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PagintedUsers?: PagintedUsersResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   SignedUser?: SignedUserResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  UserEditableProperties?: UserEditablePropertiesResolvers<ContextType>;
 }>;
 

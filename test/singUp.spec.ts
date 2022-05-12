@@ -1,6 +1,9 @@
 import { expect } from "chai";
 import { v4 as uuid } from 'uuid';
-import { connectDb, models } from "../src/models";
+import { 
+    connectDb, 
+    models 
+} from "../src/models";
 import { signUp } from "./test-apis";
 import { roles } from  '../src/const/index';
 

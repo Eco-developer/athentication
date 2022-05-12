@@ -12,6 +12,7 @@ export const isAuthenticated = (parent: any, args: any, context: Context) => {
         token,
     } = context;
     if (token) {
+        
         try {
             jwt.verify(token.toString(), `${process.env.JWT_SECRET}`);
             return skip;

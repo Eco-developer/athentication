@@ -1,0 +1,2 @@
+import { key } from "../types";
+export const keys: key[] = ["user_fullname", "user_email", "user_password", "user_avatar", "user_phone", "user_address", "user_city", "user_postal_code", "user_country", "user_payment_method", "user_payment_provider", "user_payment_account_no", "user_payment_expire", "user_confirm_email"];

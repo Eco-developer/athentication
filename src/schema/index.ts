@@ -23,7 +23,6 @@ export const schema = gql`
             user_payment_method: String
             user_payment_provider: String
             user_payment_account_no: String
-            user_basquet: [String]
             user_payment_expire: String
             user_confirm_email: Boolean!
         ): SignedUser   
@@ -36,6 +35,26 @@ export const schema = gql`
         deleteUser (
             user_id: String!
         ): ConfirmDelection!
+
+        modifyUser (
+            type: String!
+            user_id: String!,
+            user_fullname: String
+            user_email: String
+            user_avatar: String
+            user_phone: String
+            user_address: String
+            user_city: String
+            user_postal_code: String
+            user_country: String
+            user_payment_method: String
+            user_payment_provider: String
+            user_payment_account_no: String
+            user_payment_expire: String
+            user_confirm_email: Boolean
+            user_basquet: [String]
+            user_orders: [String]
+        ): EditedPropeties
     }
 
     type User {
@@ -55,8 +74,27 @@ export const schema = gql`
         user_payment_expire: String
         user_confirm_email: Boolean!
         user_basquet: [String]
+        user_orders: [String]
         createdAt: Date
         updatedAt: Date
+    }
+
+    type UserEditableProperties {
+        user_fullname: String
+        user_email: String
+        user_avatar: String
+        user_phone: String
+        user_address: String
+        user_city: String
+        user_postal_code: String
+        user_country: String
+        user_payment_method: String
+        user_payment_provider: String
+        user_payment_account_no: String
+        user_payment_expire: String
+        user_confirm_email: Boolean
+        user_basquet: [String]
+        user_orders: [String]
     }
 
     type SignedUser {
@@ -71,6 +109,10 @@ export const schema = gql`
 
     type ConfirmDelection {
         deleted: Boolean!
+    }
+
+    type EditedPropeties {
+        edited: [UserEditableProperties]!
     }
 
     scalar Date

@@ -28,6 +28,7 @@ export const signUp = async (variables: any) => {
               user_payment_expire
               user_confirm_email
               user_basquet
+              user_orders
             }
             token
           }
@@ -62,6 +63,7 @@ export const login = async (variables: any) => {
                 user_payment_expire
                 user_confirm_email
                 user_basquet
+                user_orders
               }
               token
             }
@@ -112,6 +114,7 @@ export const queryUser = async (variables: any, token: string = "") => {
               user_payment_expire
               user_confirm_email
               user_basquet
+              user_orders
               createdAt
               updatedAt
             }
@@ -146,7 +149,7 @@ export const queryUsers = async (variables: any, token: string = "") => {
                 user_payment_account_no
                 user_payment_expire
                 user_confirm_email
-                user_basquet
+                user_orders
                 createdAt
                 updatedAt
               }
