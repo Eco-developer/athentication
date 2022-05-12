@@ -36,7 +36,7 @@ export const schema = gql`
             user_id: String!
         ): ConfirmDelection!
 
-        modifyUser (
+        updateUser (
             type: String!
             user_id: String!,
             user_fullname: String
@@ -112,7 +112,7 @@ export const schema = gql`
     }
 
     type EditedPropeties {
-        edited: [UserEditableProperties]!
+        edited: UserEditableProperties!
     }
 
     scalar Date

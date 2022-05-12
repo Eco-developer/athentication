@@ -1,11 +1,10 @@
-import { EditablePropertiesInterface } from "../../interfaces";
 import { keys } from "../../const";
 
-export const transformObjectToArray = (object: EditablePropertiesInterface) => {
+export const transformObjectToArray = (object: any) => {
     if (!Object.keys(object).length) {
         return null;
     }
-    const notNullArray :EditablePropertiesInterface[] = [];
+    const notNullArray :any[] = [];
     
     for (let i = 0; i < keys.length; i++) {
         const property = keys[i];

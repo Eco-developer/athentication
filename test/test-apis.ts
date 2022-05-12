@@ -91,6 +91,39 @@ export const deleteUser = async (variables: any, token: string = "") => {
   )    
 }
 
+export const updateUser = async (variables: any, token: string = "") => {
+  return await axios.post(
+      api,
+      {
+          query: `
+          mutation Mutation($userId: String!) {
+            updateUser(user_id: $userId) {
+              edited {
+                user_fullname: String
+                user_email: String
+                user_avatar: String
+                user_phone: String
+                user_address: String
+                user_city: String
+                user_postal_code: String
+                user_country: String
+                user_payment_method: String
+                user_payment_provider: String
+                user_payment_account_no: String
+                user_payment_expire: String
+                user_confirm_email: Boolean
+                user_basquet: [String]
+                user_orders: [String]
+              }
+            }
+          }
+          `,
+          variables 
+      },
+      { headers: { "x-data-token": token } }
+  )    
+}
+
 export const queryUser = async (variables: any, token: string = "") => {
   return await axios.post(
       api,

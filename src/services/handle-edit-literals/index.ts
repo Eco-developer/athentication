@@ -1,8 +1,7 @@
 import { transformObjectToArray } from "../transform-object-to-array";
-import { EditablePropertiesInterface } from "../../interfaces";
 import { keys } from "../../const";
 
-export const handleEditLiterals = (objectToEdit : any, objectProperties: EditablePropertiesInterface) => {
+export const handleEditLiterals = (objectToEdit : any, objectProperties: any) => {
     const propertiesToEdit = transformObjectToArray(objectProperties);
     if (!propertiesToEdit) {
         return objectToEdit;

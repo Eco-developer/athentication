@@ -8,6 +8,7 @@ import {
     isAdmin,
 } from "../authorization";
 import { combineResolvers } from "graphql-resolvers";
+import { updateUser } from "./update-user";
 
 export const resolvers = {
     Query: {
@@ -29,6 +30,11 @@ export const resolvers = {
         deleteUser: combineResolvers(
             isAuthenticated,
             deleteUser,
-        )
+        ),
+        updateUser: combineResolvers(
+            isAuthenticated,
+            updateUser,
+        ),
+        
     }
 }

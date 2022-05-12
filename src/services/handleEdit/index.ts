@@ -1,9 +1,8 @@
 import { handleEditLiterals } from "../handle-edit-literals";
 import { handleEditarray } from "../handle-edit-array";
-import { EditablePropertiesInterface } from "../../interfaces";
 import { types } from '../../const/index';
 
-export const handleEdit = (type : string, objectToEdit : any, objectProperties: EditablePropertiesInterface) => {
+export const handleEdit = (type : string, objectToEdit : any, objectProperties: any) => {
     switch (type) {
         case types.EDIT_LITERAL_PROPERTIES:
             return handleEditLiterals(objectToEdit, objectProperties);

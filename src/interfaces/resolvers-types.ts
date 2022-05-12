@@ -30,8 +30,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   deleteUser: ConfirmDelection;
   login?: Maybe<SignedUser>;
-  modifyUser?: Maybe<EditedPropeties>;
   signUp?: Maybe<SignedUser>;
+  updateUser?: Maybe<EditedPropeties>;
 };
 
 
@@ -43,27 +43,6 @@ export type MutationDeleteUserArgs = {
 export type MutationLoginArgs = {
   user_email: Scalars['String'];
   user_password: Scalars['String'];
-};
-
-
-export type MutationModifyUserArgs = {
-  type: Scalars['String'];
-  user_address?: InputMaybe<Scalars['String']>;
-  user_avatar?: InputMaybe<Scalars['String']>;
-  user_basquet?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  user_city?: InputMaybe<Scalars['String']>;
-  user_confirm_email?: InputMaybe<Scalars['Boolean']>;
-  user_country?: InputMaybe<Scalars['String']>;
-  user_email?: InputMaybe<Scalars['String']>;
-  user_fullname?: InputMaybe<Scalars['String']>;
-  user_id: Scalars['String'];
-  user_orders?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  user_payment_account_no?: InputMaybe<Scalars['String']>;
-  user_payment_expire?: InputMaybe<Scalars['String']>;
-  user_payment_method?: InputMaybe<Scalars['String']>;
-  user_payment_provider?: InputMaybe<Scalars['String']>;
-  user_phone?: InputMaybe<Scalars['String']>;
-  user_postal_code?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -84,6 +63,27 @@ export type MutationSignUpArgs = {
   user_phone?: InputMaybe<Scalars['String']>;
   user_postal_code?: InputMaybe<Scalars['String']>;
   user_roles: Array<InputMaybe<Scalars['String']>>;
+};
+
+
+export type MutationUpdateUserArgs = {
+  type: Scalars['String'];
+  user_address?: InputMaybe<Scalars['String']>;
+  user_avatar?: InputMaybe<Scalars['String']>;
+  user_basquet?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  user_city?: InputMaybe<Scalars['String']>;
+  user_confirm_email?: InputMaybe<Scalars['Boolean']>;
+  user_country?: InputMaybe<Scalars['String']>;
+  user_email?: InputMaybe<Scalars['String']>;
+  user_fullname?: InputMaybe<Scalars['String']>;
+  user_id: Scalars['String'];
+  user_orders?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  user_payment_account_no?: InputMaybe<Scalars['String']>;
+  user_payment_expire?: InputMaybe<Scalars['String']>;
+  user_payment_method?: InputMaybe<Scalars['String']>;
+  user_payment_provider?: InputMaybe<Scalars['String']>;
+  user_phone?: InputMaybe<Scalars['String']>;
+  user_postal_code?: InputMaybe<Scalars['String']>;
 };
 
 export type PagintedUsers = {
@@ -275,8 +275,8 @@ export type EditedPropetiesResolvers<ContextType = Context, ParentType extends R
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   deleteUser?: Resolver<ResolversTypes['ConfirmDelection'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'user_id'>>;
   login?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'user_email' | 'user_password'>>;
-  modifyUser?: Resolver<Maybe<ResolversTypes['EditedPropeties']>, ParentType, ContextType, RequireFields<MutationModifyUserArgs, 'type' | 'user_id'>>;
   signUp?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'user_confirm_email' | 'user_email' | 'user_fullname' | 'user_id' | 'user_password' | 'user_roles'>>;
+  updateUser?: Resolver<Maybe<ResolversTypes['EditedPropeties']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'type' | 'user_id'>>;
 }>;
 
 export type PagintedUsersResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PagintedUsers'] = ResolversParentTypes['PagintedUsers']> = ResolversObject<{

@@ -1,7 +1,6 @@
 
-import { EditablePropertiesInterface } from "../../interfaces";
 
-export const handleEditarray = (objectToEdit : any, objectProperties: EditablePropertiesInterface) => {
+export const handleEditarray = (objectToEdit : any, objectProperties: any) => {
     if (objectProperties.user_basquet && objectProperties.user_basquet.length) {
         objectToEdit.user_basquet = [...objectProperties.user_basquet]
     } 
