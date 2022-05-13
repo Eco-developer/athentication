@@ -23,7 +23,8 @@ export type ConfirmDelection = {
 
 export type EditedPropeties = {
   __typename?: 'EditedPropeties';
-  edited: Array<Maybe<UserEditableProperties>>;
+  edited: UserEditableProperties;
+  type: Scalars['String'];
 };
 
 export type Mutation = {
@@ -268,7 +269,8 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type EditedPropetiesResolvers<ContextType = Context, ParentType extends ResolversParentTypes['EditedPropeties'] = ResolversParentTypes['EditedPropeties']> = ResolversObject<{
-  edited?: Resolver<Array<Maybe<ResolversTypes['UserEditableProperties']>>, ParentType, ContextType>;
+  edited?: Resolver<ResolversTypes['UserEditableProperties'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

@@ -96,25 +96,26 @@ export const updateUser = async (variables: any, token: string = "") => {
       api,
       {
           query: `
-          mutation Mutation($userId: String!) {
-            updateUser(user_id: $userId) {
+          mutation UpdateUser($type: String!, $userId: String!, $userFullname: String, $userEmail: String, $userAvatar: String, $userPhone: String, $userAddress: String, $userCity: String, $userCountry: String, $userPostalCode: String, $userPaymentMethod: String, $userPaymentProvider: String, $userPaymentAccountNo: String, $userPaymentExpire: String, $userConfirmEmail: Boolean, $userBasquet: [String], $userOrders: [String]) {
+            updateUser(type: $type, user_id: $userId, user_fullname: $userFullname, user_email: $userEmail, user_avatar: $userAvatar, user_phone: $userPhone, user_address: $userAddress, user_city: $userCity, user_country: $userCountry, user_postal_code: $userPostalCode, user_payment_method: $userPaymentMethod, user_payment_provider: $userPaymentProvider, user_payment_account_no: $userPaymentAccountNo, user_payment_expire: $userPaymentExpire, user_confirm_email: $userConfirmEmail, user_basquet: $userBasquet, user_orders: $userOrders) {
               edited {
-                user_fullname: String
-                user_email: String
-                user_avatar: String
-                user_phone: String
-                user_address: String
-                user_city: String
-                user_postal_code: String
-                user_country: String
-                user_payment_method: String
-                user_payment_provider: String
-                user_payment_account_no: String
-                user_payment_expire: String
-                user_confirm_email: Boolean
-                user_basquet: [String]
-                user_orders: [String]
+                user_fullname
+                user_email
+                user_avatar
+                user_orders
+                user_basquet
+                user_confirm_email
+                user_payment_expire
+                user_payment_account_no
+                user_payment_provider
+                user_payment_method
+                user_postal_code
+                user_country
+                user_city
+                user_phone
+                user_address
               }
+              type
             }
           }
           `,

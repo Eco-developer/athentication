@@ -112,6 +112,7 @@ export const schema = gql`
     }
 
     type EditedPropeties {
+        type: String!
         edited: UserEditableProperties!
     }
 
