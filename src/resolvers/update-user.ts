@@ -36,7 +36,7 @@ export const updateUser = async (parent: any, args: GraphqlResolversTypes.Mutati
         if (!propertiesToUpdate) {
             throw new ForbiddenError("No editable property was passed.");
         }
-        if ((type === types.EDIT_ARRAY_PROPERTIES && !rest.user_orders ) || (type === types.EDIT_ARRAY_PROPERTIES && !rest.user_basquet )) {
+        if ((type === types.EDIT_ARRAY_PROPERTIES && !rest.user_orders ) && (type === types.EDIT_ARRAY_PROPERTIES && !rest.user_basquet )) {
             throw new ForbiddenError("The editable properties that have been passed does not match the type argument.");
         }
         if ((type === types.EDIT_LITERAL_PROPERTIES && rest.user_orders ) || (type === types.EDIT_LITERAL_PROPERTIES && rest.user_basquet )) {
@@ -45,8 +45,6 @@ export const updateUser = async (parent: any, args: GraphqlResolversTypes.Mutati
         const userUpdated = handleEdit(type, user, rest);
         userUpdated.save();
         const editedPropertiesObj = transformArrayToObject(propertiesToUpdate);
-        console.log(type)
-        console.log(editedPropertiesObj)
 
         return {
             type,

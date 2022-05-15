@@ -122,11 +122,6 @@ describe("end to end update user by user_id test", () => {
         const result = await updateUser(userData, token);
         expect(result.data).to.have.property("errors");
         expect(result.data.errors[0].message).to.be.equal("The editable properties that have been passed does not match the type argument.");
-
-       
-      //  expect(result.data.data).to.have.property("deleteUser");
-       // expect(result.data.data.deleteUser).to.have.property("deleted");
-    //    expect(result.data.data.deleteUser.deleted).to.be.true;
     })
 
     it(`should return the type ${types.EDIT_ARRAY_PROPERTIES} and the edited properties`, async () => {
@@ -142,7 +137,6 @@ describe("end to end update user by user_id test", () => {
             userOrders: [uuid(), uuid()],
         }
         const result = await updateUser(userData, token);
-        console.log(result.data)
         expect(result.data.data).to.have.property("updateUser");
         expect(result.data.data.updateUser).to.have.property("edited");
         expect(result.data.data.updateUser).to.have.property("type");
