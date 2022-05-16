@@ -8,6 +8,7 @@ import {
     GraphqlResolversTypes
 } from "../interfaces";
 import 'dotenv/config';
+import { createValidationPin } from '../services/create-validation-pin';
 
 export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSignUpArgs, context: Context) => {
     try {
@@ -30,7 +31,13 @@ export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSi
             throw new Error("There is a user with this email already");
         }
         const hashPassword = await bcrypt.hash(user_password, 8);
-		user = new models.User({...rest, user_email, user_password: hashPassword});
+        const user_validatetion_pin = createValidationPin();
+		user = new models.User({
+            ...rest, 
+            user_email, 
+            user_password: hashPassword,
+            user_validatetion_pin,
+        });
 		await user.save();
 		const signedUser = await models.User.findOne({user_email});
 		if (!signedUser) {

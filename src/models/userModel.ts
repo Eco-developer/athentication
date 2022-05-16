@@ -95,6 +95,11 @@ const schema = new Schema<UserInterface>({
         type: [String],
         default: [],
     },
+    user_validatetion_pin: {
+        type: String,
+        trim: true,
+        default: '',
+    },
 }, { timestamps: true });
 
 export const User = model<UserInterface>('User', schema);

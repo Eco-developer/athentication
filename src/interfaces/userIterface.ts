@@ -17,6 +17,7 @@ export interface UserInterface {
     user_confirm_email: boolean;
     user_basquet?: string[];
     user_orders?: string[];
+    user_validatetion_pin?: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
