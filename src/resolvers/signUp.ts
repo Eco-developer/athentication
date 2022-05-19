@@ -1,14 +1,16 @@
 import bcrypt from 'bcrypt';
+import axios from 'axios';
 import { 
 	createToken,
 	validate,
+    createValidationPin
 } from '../services/index';
 import { 
     Context,
     GraphqlResolversTypes
 } from "../interfaces";
 import 'dotenv/config';
-import { createValidationPin } from '../services/create-validation-pin';
+
 
 export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSignUpArgs, context: Context) => {
     try {
@@ -49,6 +51,19 @@ export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSi
 		} = signedUser.toObject();
 
 		const token = createToken(restsigned.user_email, restsigned.user_id, secret, "30m");
+
+        const mailData = {
+            from: 'josesk8mqc@gmail.com', // sender address
+            to: user_email, // list of receivers
+            subject: `Hi ${restsigned.user_fullname}, please verify your account`, // Subject line
+            contentText: "Account Verification. Thank you for choosing Mailgun! Please confirm your email address by clicking the link below. We'll communicate important updates with you from time to time via email, so it's essential that we have an up-to-date email address on file.", // plain text body
+            contentHtml: `<br>Account Verification.</br>Thank you for choosing Mailgun! Please confirm your email address by clicking the link below. We'll communicate important updates with you from time to time via email, so it's essential that we have an up-to-date email address on file.</br></br>your confirmation pin is <strong>${user_validatetion_pin}</strong>`, // html body
+        }
+
+        await axios.post(
+            `${process.env.MAIL_MICROSERVICE}`,
+            mailData
+        )   
 
 		return { 
             user: {

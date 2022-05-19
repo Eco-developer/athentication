@@ -40,6 +40,7 @@ class Server {
     async listen() {
         await connectDb();
         this.app.listen({port: this.port}, ()=>{
+            
             console.log(`listening on port ${this.port}`);
         });
     }

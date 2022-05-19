@@ -17,7 +17,7 @@ describe("end to end singUp test", () => {
             userId: uuid(),
             userRoles: [roles.USER],  
             userFullname: "jose",
-            userEmail: `user@example.com`, 
+            userEmail: `josesk8mqc@gmail.com`, 
             userPassword: `123456Jm.`,
             userConfirmEmail: false,
         }
@@ -28,7 +28,6 @@ describe("end to end singUp test", () => {
         expect(result.data.data.signUp.user).to.have.property("user_fullname");
         expect(result.data.data.signUp.user).to.have.property("user_id");
         expect(result.data.data.signUp.user).to.have.property("user_confirm_email");    
-           
     })
 
     it("should return an error because the credentials do not pass the email or password validation", async () => {
@@ -51,7 +50,7 @@ describe("end to end singUp test", () => {
             userId: uuid(),
             userRoles: [roles.USER],  
             userFullname: "jose",
-            userEmail: `user@example.com`, 
+            userEmail: `josesk8mqc@gmail.com`, 
             userPassword: `123456Jm.`,
             userConfirmEmail: false,
         }
