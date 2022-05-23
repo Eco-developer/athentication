@@ -23,13 +23,11 @@ export const sendMail = async (from: string, to: string, subject: string, conten
         const { 
             data 
         } = response;
-        console.log(data)
         return {
             data,
             error: false,
         }
     } catch (error:any) {
-        console.log(error)
         return {
             data: false,
             error: true,

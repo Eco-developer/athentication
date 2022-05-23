@@ -3,7 +3,8 @@ import axios from 'axios';
 import { 
 	createToken,
 	validate,
-    createValidationPin
+    createValidationPin,
+    sendMail
 } from '../services/index';
 import { 
     Context,
@@ -45,25 +46,31 @@ export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSi
 		if (!signedUser) {
             throw new Error("Something went wrong");
         }
+        
+        
+
 		const { 
 			user_password : hashedPassword, 
 			...restsigned
 		} = signedUser.toObject();
+        
+        const result = await sendMail(
+            "josesk8mqc@gmail.com", 
+            restsigned.user_email, 
+            `Hi ${restsigned.user_fullname}, please verify your account.`, 
+            `This message is to confirm your email and prove that you are not a robot, introduce this confimation code in the app. ${user_validatetion_pin}`, 
+            '/templates/signup-email/template.html', 
+            { 
+                user_fullname: restsigned.user_fullname, 
+                user_validatetion_pin,
+            }
+        );
 
-		const token = createToken(restsigned.user_email, restsigned.user_id, secret, "30m");
-
-        const mailData = {
-            from: 'josesk8mqc@gmail.com', // sender address
-            to: user_email, // list of receivers
-            subject: `Hi ${restsigned.user_fullname}, please verify your account`, // Subject line
-            contentText: "Account Verification. Thank you for choosing Mailgun! Please confirm your email address by clicking the link below. We'll communicate important updates with you from time to time via email, so it's essential that we have an up-to-date email address on file.", // plain text body
-            contentHtml: `<br>Account Verification.</br>Thank you for choosing Mailgun! Please confirm your email address by clicking the link below. We'll communicate important updates with you from time to time via email, so it's essential that we have an up-to-date email address on file.</br></br>your confirmation pin is <strong>${user_validatetion_pin}</strong>`, // html body
+        if (result.error) {
+            throw new Error(result.message);
         }
 
-        await axios.post(
-            `${process.env.MAIL_MICROSERVICE}`,
-            mailData
-        )   
+		const token = createToken(restsigned.user_email, restsigned.user_id, secret, "30m");
 
 		return { 
             user: {

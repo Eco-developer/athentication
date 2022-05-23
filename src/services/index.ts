@@ -6,6 +6,9 @@ import { handleEditarray } from "./handle-edit-array/index";
 import { handleEdit } from "./handleEdit/index";
 import { transformArrayToObject } from "./transform-array-to-obJect/index";
 import { createValidationPin } from "./create-validation-pin/index";
+import { sendMail } from "./send-email/index";
+import { createEmail } from "./create-email-template/index";
+
 export {
     createToken,
     validate,
@@ -15,4 +18,6 @@ export {
     handleEditarray,
     handleEdit,
     createValidationPin,
+    sendMail,
+    createEmail,
 }
