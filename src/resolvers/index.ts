@@ -3,12 +3,14 @@ import { login } from "./login";
 import { user } from "./query-user";
 import { users } from "./query-users";
 import { deleteUser } from "./delete-user";
+import { updateUser } from "./update-user";
+import { verifyEmail } from "./veifry-email";
 import { 
     isAuthenticated,
     isAdmin,
 } from "../authorization";
 import { combineResolvers } from "graphql-resolvers";
-import { updateUser } from "./update-user";
+
 
 export const resolvers = {
     Query: {
@@ -35,6 +37,10 @@ export const resolvers = {
             isAuthenticated,
             updateUser,
         ),
+        verifyEmail: combineResolvers(
+            isAuthenticated,
+            verifyEmail,
+        )
         
     }
 }

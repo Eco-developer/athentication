@@ -55,6 +55,11 @@ export const schema = gql`
             user_basquet: [String]
             user_orders: [String]
         ): EditedPropeties
+
+        verifyEmail (
+            user_id: String
+            user_validatetion_pin: String
+        ) : UserVerified!
     }
 
     type User {
@@ -109,6 +114,10 @@ export const schema = gql`
 
     type ConfirmDelection {
         deleted: Boolean!
+    }
+
+    type UserVerified {
+        verified: Boolean!
     }
 
     type EditedPropeties {

@@ -1,4 +1,4 @@
-import { expect } from "chai";
+/*import { expect } from "chai";
 import { sendMail } from "./index";
 import { createValidationPin } from "../create-validation-pin";
 
@@ -32,4 +32,4 @@ describe('test send email', () => {
         );
         expect(result.data).to.have.property("messageId");
     });
-});
+});*/

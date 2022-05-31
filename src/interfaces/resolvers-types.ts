@@ -33,6 +33,7 @@ export type Mutation = {
   login?: Maybe<SignedUser>;
   signUp?: Maybe<SignedUser>;
   updateUser?: Maybe<EditedPropeties>;
+  verifyEmail: UserVerified;
 };
 
 
@@ -85,6 +86,12 @@ export type MutationUpdateUserArgs = {
   user_payment_provider?: InputMaybe<Scalars['String']>;
   user_phone?: InputMaybe<Scalars['String']>;
   user_postal_code?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationVerifyEmailArgs = {
+  user_id?: InputMaybe<Scalars['String']>;
+  user_validatetion_pin?: InputMaybe<Scalars['String']>;
 };
 
 export type PagintedUsers = {
@@ -157,6 +164,11 @@ export type UserEditableProperties = {
   user_payment_provider?: Maybe<Scalars['String']>;
   user_phone?: Maybe<Scalars['String']>;
   user_postal_code?: Maybe<Scalars['String']>;
+};
+
+export type UserVerified = {
+  __typename?: 'UserVerified';
+  verified: Scalars['Boolean'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -241,6 +253,7 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
   UserEditableProperties: ResolverTypeWrapper<UserEditableProperties>;
+  UserVerified: ResolverTypeWrapper<UserVerified>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -257,6 +270,7 @@ export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String'];
   User: User;
   UserEditableProperties: UserEditableProperties;
+  UserVerified: UserVerified;
 }>;
 
 export type ConfirmDelectionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ConfirmDelection'] = ResolversParentTypes['ConfirmDelection']> = ResolversObject<{
@@ -279,6 +293,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   login?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'user_email' | 'user_password'>>;
   signUp?: Resolver<Maybe<ResolversTypes['SignedUser']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'user_confirm_email' | 'user_email' | 'user_fullname' | 'user_id' | 'user_password' | 'user_roles'>>;
   updateUser?: Resolver<Maybe<ResolversTypes['EditedPropeties']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'type' | 'user_id'>>;
+  verifyEmail?: Resolver<ResolversTypes['UserVerified'], ParentType, ContextType, Partial<MutationVerifyEmailArgs>>;
 }>;
 
 export type PagintedUsersResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PagintedUsers'] = ResolversParentTypes['PagintedUsers']> = ResolversObject<{
@@ -340,6 +355,11 @@ export type UserEditablePropertiesResolvers<ContextType = Context, ParentType ex
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UserVerifiedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['UserVerified'] = ResolversParentTypes['UserVerified']> = ResolversObject<{
+  verified?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = Context> = ResolversObject<{
   ConfirmDelection?: ConfirmDelectionResolvers<ContextType>;
   Date?: GraphQLScalarType;
@@ -350,5 +370,6 @@ export type Resolvers<ContextType = Context> = ResolversObject<{
   SignedUser?: SignedUserResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserEditableProperties?: UserEditablePropertiesResolvers<ContextType>;
+  UserVerified?: UserVerifiedResolvers<ContextType>;
 }>;
 

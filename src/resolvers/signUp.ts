@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import axios from 'axios';
 import { 
 	createToken,
 	validate,
@@ -46,8 +45,6 @@ export const signUp = async (parent: any, args: GraphqlResolversTypes.MutationSi
 		if (!signedUser) {
             throw new Error("Something went wrong");
         }
-        
-        
 
 		const { 
 			user_password : hashedPassword, 

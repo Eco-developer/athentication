@@ -91,6 +91,23 @@ export const deleteUser = async (variables: any, token: string = "") => {
   )    
 }
 
+export const verifyEmail = async (variables: any, token: string = "") => {
+  return await axios.post(
+      api,
+      {
+          query: `
+          mutation Mutation($userId: String!, $userValidatetionPin: String!) {
+            verifyEmail(user_id: $userId, user_validatetion_pin: $userValidatetionPin) {
+              verified
+            }
+          }
+          `,
+          variables 
+      },
+      { headers: { "x-data-token": token } }
+  )    
+}
+
 export const updateUser = async (variables: any, token: string = "") => {
   return await axios.post(
       api,
